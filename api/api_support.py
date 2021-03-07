@@ -29,5 +29,5 @@ def generate_keys(username_sender,username_receiver):
             KEY_TWO *= i
     KEY_TWO += 1 
     dictionary = {"p":KEY_ONE,"q":KEY_TWO}
-    return jsonify(dictionary)
+    return dictionary
     
