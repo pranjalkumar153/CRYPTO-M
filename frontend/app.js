@@ -13,7 +13,7 @@ app.get(["/", "/homepage", "/sign-in"], function(req, res) {
 });
 
 app.post("/register_signup", function(req, res) {
-
+    // will set up the backend soon
 });
 
 app.post("/register_signup", function(req, res) {
