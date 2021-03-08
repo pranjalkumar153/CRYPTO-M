@@ -21,7 +21,6 @@ app.post("/register_signup", function(req, res) {
     var password_confirmation = req.body.password_confirmation;
     if (password == password_confirmation) {
         console.log("reg done!!");
-
     }
 });
 
