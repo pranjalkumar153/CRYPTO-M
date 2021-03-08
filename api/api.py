@@ -51,10 +51,25 @@ def generate_key(sender,receiver):
 #         console.log("reg done!!");
 #     }   
 
-from hashlib import sha256 
+@app.route("/register/<first_name>/<last_name>/<username>/<email>/<password>")
+def register(first_name,last_name,username,email,password):
+    dictionary_data = {
+        "first_name":first_name,
+        "last_name":last_name,
+        "username":username,
+        "email":email,
+        "password":password
+    }
+    
+    db.child("users").push(dictionary_data);
+    return dictionary_data
 
-@app.route("/register/<first_name>/<last_name>/<email>/<password>")
-def register():
-    print("Do nothing") 
+# db.child("name").remove()
+
+# db.child("name").push({"name":"Pranjal Kumar"})
+# users = db.child("name").child("name").get()
+
+# print(users)
+    
     
 app.run(debug=True)

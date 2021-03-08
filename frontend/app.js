@@ -24,15 +24,17 @@ app.post("/register_signup", function(req, res) {
     var password = req.body.password;
     var password_confirmation = req.body.password_confirmation;
     if (password == password_confirmation) {
+        var url = "http://127.0.0.1:5000/register";
+        url += "/" + first_name;
+        url += "/" + last_name;
+        url += "/" + username;
+        url += "/" + email;
+        url += "/" + md5(password);
         // add the api implementation here
-        // "/register/<first_name>/<last_name>/<email>/<password>"
-        request("/", function(error, response, body) {
+        // "/register/<first_name>/<last_name>/<username>/<email>/<password>"
+        request(url, function(error, response, body) {
             if (!error && response.statusCode == 200) {
                 results = JSON.parse(body);
-                console.log(results.Search);
-                console.log(typeof(Object.values(results.Search)));
-                //Converted the object to array;
-                results = Object.values(results.Search);
                 console.log(results);
                 console.log("INFORMATION SUCCESFULLY FETCHED");
             } else {
