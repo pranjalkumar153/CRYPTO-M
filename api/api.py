@@ -22,7 +22,7 @@ firebase = pyrebase.initialize_app(config)
 
 db = firebase.database()
 
-db.child("name").remove()
+# db.child("name").remove()
 
 # db.child("name").push({"name":"Pranjal Kumar"})
 # users = db.child("name").child("name").get()
@@ -49,6 +49,12 @@ def generate_key(sender,receiver):
 #     var password_confirmation = req.body.password_confirmation;
 #     if (password == password_confirmation) {
 #         console.log("reg done!!");
-#     }    
+#     }   
 
+from hashlib import sha256 
+
+@app.route("/register/<first_name>/<last_name>/<email>/<password>")
+def register():
+    print("Do nothing") 
+    
 app.run(debug=True)
