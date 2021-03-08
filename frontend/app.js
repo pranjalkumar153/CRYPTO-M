@@ -12,6 +12,10 @@ app.get(["/", "/homepage", "/sign-in"], function(req, res) {
     res.render("sign-in");
 });
 
+app.get("/404_page", function(req, res) {
+    res.render("page_404");
+});
+
 app.get("/error", function(req, res) {
     res.render("error");
 });
@@ -39,6 +43,7 @@ app.post("/register_signup", function(req, res) {
                 console.log("INFORMATION SUCCESFULLY FETCHED");
             } else {
                 console.log("AN ERROR OCCURRED WHILE CONNECTING TO THE SERVER!!");
+                app.redirect("/404_page");
             }
         });
     } else {
