@@ -13,10 +13,6 @@ app.get(["/", "/homepage", "/sign-in"], function(req, res) {
 });
 
 app.post("/register_signup", function(req, res) {
-    // will set up the backend soon
-});
-
-app.post("/register_signup", function(req, res) {
     var first_name = req.body.first_name;
     var last_name = req.body.last_name;
     var username = req.body.username;
@@ -25,6 +21,7 @@ app.post("/register_signup", function(req, res) {
     var password_confirmation = req.body.password_confirmation;
     if (password == password_confirmation) {
         console.log("reg done!!");
+
     }
 });
 
