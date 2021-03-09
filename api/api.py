@@ -40,16 +40,7 @@ def hello():
 @app.route("/generate_key/<sender>/<receiver>")
 def generate_key(sender,receiver):
     return generate_keys(sender,receiver)
-    
-# var first_name = req.body.first_name;
-#     var last_name = req.body.last_name;
-#     var username = req.body.username;
-#     var email = req.body.email;
-#     var password = req.body.password;
-#     var password_confirmation = req.body.password_confirmation;
-#     if (password == password_confirmation) {
-#         console.log("reg done!!");
-#     }   
+  
 # registration route functionality
 @app.route("/register/<first_name>/<last_name>/<username>/<email>/<password>")
 def register(first_name,last_name,username,email,password):
@@ -71,6 +62,8 @@ def register(first_name,last_name,username,email,password):
     dictionary_data["success"]
     db.child("users").push(dictionary_data);
     return dictionary_data
+
+# for reference of database functionality
 
 # db.child("name").remove()
 
