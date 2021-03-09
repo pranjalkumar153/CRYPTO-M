@@ -66,3 +66,6 @@ app.get("/message", function(req, res) {
 app.listen(8000, 8000, function(req, res) {
     console.log("CONNECTED SUCCESSFULLY TO THE SERVER!!");
 });
+
+
+// sorting out the signup system
