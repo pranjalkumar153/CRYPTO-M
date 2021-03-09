@@ -20,6 +20,10 @@ app.get("/error", function(req, res) {
     res.render("error");
 });
 
+app.get("/already_exists", function(req, res) {
+    res.render("already_exists");
+});
+
 app.post("/register_signup", function(req, res) {
     var first_name = req.body.first_name;
     var last_name = req.body.last_name;
@@ -41,14 +45,23 @@ app.post("/register_signup", function(req, res) {
                 results = JSON.parse(body);
                 console.log(results);
                 console.log("INFORMATION SUCCESFULLY FETCHED");
+                if (results.success == true) {
+                    res.redirect("/success");
+                } else {
+                    res.redirect("/already_exists");
+                }
             } else {
                 console.log("AN ERROR OCCURRED WHILE CONNECTING TO THE SERVER!!");
-                app.redirect("/404_page");
+                res.redirect("/404_page");
             }
         });
     } else {
-        app.redirect("/error");
+        res.redirect("/error");
     }
+});
+
+app.get("/success", function(req, res) {
+    res.render("success", { user: results });
 });
 
 app.get("/sign-up", function(req, res) {

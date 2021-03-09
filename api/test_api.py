@@ -29,6 +29,4 @@ db = firebase.database()
 
 # print(users)
 
-data = db.child("id").get()
-print(data.key())
-    
+db.child("id").push({"id":"1"})

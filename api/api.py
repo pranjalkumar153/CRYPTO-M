@@ -50,7 +50,7 @@ def generate_key(sender,receiver):
 #     if (password == password_confirmation) {
 #         console.log("reg done!!");
 #     }   
-
+# registration route functionality
 @app.route("/register/<first_name>/<last_name>/<username>/<email>/<password>")
 def register(first_name,last_name,username,email,password):
     dictionary_data = {
@@ -58,9 +58,17 @@ def register(first_name,last_name,username,email,password):
         "last_name":last_name,
         "username":username,
         "email":email,
-        "password":password
+        "password":password,
+        "success" : True
     }
-    
+    users = db.child("users").get()
+    for x in users.each():
+        if(x.val()["email"]==email or x.val()["username"]==username):
+            dictionary_data["success"] = False
+            break
+    if(dictionary_data["success"]==False):
+        return dictionary_data
+    dictionary_data["success"]
     db.child("users").push(dictionary_data);
     return dictionary_data
 
