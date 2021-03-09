@@ -29,7 +29,7 @@ db = firebase.database()
 
 # print(users)
 
-
+# use express-session for authentication
 
 
 app = Flask(__name__)
