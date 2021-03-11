@@ -26,15 +26,6 @@ app.post("/login", function(req, res) {
     url += "/" + password;
     request(url, function(error, response, body) {
         if (!error && response.statusCode == 200) {
-            // results = JSON.parse(body);
-            // console.log(results);
-            // console.log("INFORMATION SUCCESFULLY FETCHED");
-            // if (results.success == true) {
-            //     res.redirect("/success");
-            // } else {
-            //     res.redirect("/already_exists");
-            // }
-
             credentials = JSON.parse(body);
             console.log("from login: ");
             console.log(credentials);
@@ -47,8 +38,6 @@ app.post("/login", function(req, res) {
             }
 
         } else {
-            // console.log("AN ERROR OCCURRED WHILE CONNECTING TO THE SERVER!!");
-            // res.redirect("/404_page");
             console.log("CAN'T LOAD PAGE!! REFRESH AND TRY AGAIN!!");
         }
     });
