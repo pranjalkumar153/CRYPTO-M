@@ -40,6 +40,23 @@ def hello():
 @app.route("/generate_key/<sender>/<receiver>")
 def generate_key(sender,receiver):
     return generate_keys(sender,receiver)
+
+# login api
+@app.route("/login/<username>/<password>")
+def login(username,password):
+    users = db.child("users").get()
+    data_dictionary = {
+        "username" : "not assigned",
+        "password" : "invalid",
+        "correct_credentials": False
+    }
+    for x in users.each():
+        if(x.val()["username"]==username and x.val()["password"]==password):
+            data_dictionary["username"] = username
+            data_dictionary["password"] = password
+            data_dictionary["correct_credentials"] = True
+            return data_dictionary
+    return data_dictionary
   
 # registration route functionality
 @app.route("/register/<first_name>/<last_name>/<username>/<email>/<password>")

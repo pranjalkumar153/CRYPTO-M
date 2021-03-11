@@ -4,12 +4,54 @@ var app = express();
 var parser = require("body-parser");
 var md5 = require("md5");
 var request = require("request");
+var session = require("express-session");
+
+app.use(express.urlencoded({ extended: true }));
+app.use(session({ secret: "43d5a9ff7e1f25311e0703f3fea42f6f62673f1cd6171a3834188fad990d4c22" }));
+
+
 
 app.use(parser.urlencoded({ extended: true }));
 
 app.set("view engine", "ejs");
 app.get(["/", "/homepage", "/sign-in"], function(req, res) {
     res.render("sign-in");
+});
+
+app.post("/login", function(req, res) {
+    username = req.body.username;
+    password = md5(req.body.password);
+    url = "http://127.0.0.1:5000/login";
+    url += "/" + username;
+    url += "/" + password;
+    request(url, function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+            // results = JSON.parse(body);
+            // console.log(results);
+            // console.log("INFORMATION SUCCESFULLY FETCHED");
+            // if (results.success == true) {
+            //     res.redirect("/success");
+            // } else {
+            //     res.redirect("/already_exists");
+            // }
+
+            credentials = JSON.parse(body);
+            console.log("from login: ");
+            console.log(credentials);
+            if (credentials.correct_credentials == true) {
+                req.session.username = credentials.username;
+                req.session.password = credentials.password;
+                res.redirect("/message");
+            } else {
+                res.redirect("/");
+            }
+
+        } else {
+            // console.log("AN ERROR OCCURRED WHILE CONNECTING TO THE SERVER!!");
+            // res.redirect("/404_page");
+            console.log("CAN'T LOAD PAGE!! REFRESH AND TRY AGAIN!!");
+        }
+    });
 });
 
 app.get("/404_page", function(req, res) {
@@ -72,8 +114,13 @@ app.get("/contacts", function(req, res) {
     res.render("contacts");
 });
 
+
 app.get("/message", function(req, res) {
-    res.render("message");
+    if (req.session.username && req.session.password) {
+        res.render("message");
+    } else {
+        res.send("You need to login in order to view this page!!");
+    }
 });
 
 app.listen(8000, 8000, function(req, res) {
