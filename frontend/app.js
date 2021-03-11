@@ -19,6 +19,9 @@ app.get(["/", "/homepage", "/sign-in"], function(req, res) {
 });
 
 app.post("/login", function(req, res) {
+    if (req.session.username && req.session.password) {
+        res.redirect("/message");
+    }
     username = req.body.username;
     password = md5(req.body.password);
     url = "http://127.0.0.1:5000/login";
