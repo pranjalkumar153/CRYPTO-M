@@ -106,17 +106,18 @@ app.get("/sign-up", function(req, res) {
     res.render("sign-up");
 });
 
-var contacts = "";
+var users = "";
 
 app.get("/contacts", function(req, res) {
     if (req.session.username && req.session.password) {
         url = "http://127.0.0.1:5000/contacts";
         request(url, function(error, response, body) {
             if (!error && response.statusCode == 200) {
-                contact_list = JSON.parse(body.friends);
+                contact_list = JSON.parse(body);
                 console.log(contact_list);
-                contacts = contact_list.friends;
-                res.redirect("/users", { contacts: contact_list });
+                users = contact_list.friends;
+                console.log(users);
+                res.redirect("/users");
             } else {
                 res.redirect("/404_page");
             }
@@ -128,7 +129,7 @@ app.get("/contacts", function(req, res) {
 
 app.get("/users", function(req, res) {
     if (req.session.username && req.session.password) {
-        res.render("contacts", { contacts: contact_list });
+        res.render("contacts", { contacts: users });
     } else {
         res.send("<h1>You need to login to view this page.</h1>");
     }

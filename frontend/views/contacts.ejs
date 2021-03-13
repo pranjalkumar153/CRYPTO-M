@@ -12,16 +12,16 @@
 <body>
     <h1>Contacts available to chat with: </h1>
     <ul>
-        <% for(var i=0;i<contacts.length;i++) %>
+        <% for(var i=0;i<contacts.length;i++){ %>
             <li>
                 <h1>
-                    <%=contacts[i].first_name%>+" "+
-                        <%=contacts[i].last_name%>
+                    <%=contacts[i].first_name+" "+contacts[i].last_name%>
                 </h1>
                 <h2>
                     <%=contacts[i].username %>
                 </h2>
             </li>
+            <% }; %>
     </ul>
 </body>
 
