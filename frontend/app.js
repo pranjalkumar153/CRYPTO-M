@@ -107,7 +107,19 @@ app.get("/sign-up", function(req, res) {
 });
 
 app.get("/contacts", function(req, res) {
-    res.render("contacts");
+    if (req.session.username && req.session.password) {
+        url = "http://127.0.0.1:5000/contacts";
+        request(url, function(error, response, body) {
+            if (!error && response.statusCode == 200) {
+                contact_list = JSON.parse(body);
+                res.render("contacts", { contacts: contact_list });
+            } else {
+                res.redirect("/404_page");
+            }
+        });
+    } else {
+        res.send("<h1>You need to login to view this page.</h1>");
+    }
 });
 
 
