@@ -1,3 +1,28 @@
-<h1>
-    Welocome to secret page in contacts added for testing!!
-</h1>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link href="signin.css" rel="stylesheet">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!------ Include the above in your HEAD tag ---------->
+</head>
+
+<body>
+    <h1>Contacts available to chat with: </h1>
+    <ul>
+        <% for(var i=0;i<contacts.length;i++) %>
+            <li>
+                <h1>
+                    <%=contacts[i].first_name%>+" "+
+                        <%=contacts[i].last_name%>
+                </h1>
+                <h2>
+                    <%=contacts[i].username %>
+                </h2>
+            </li>
+    </ul>
+</body>
+
+</html>

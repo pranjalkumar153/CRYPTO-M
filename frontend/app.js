@@ -106,6 +106,8 @@ app.get("/sign-up", function(req, res) {
     res.render("sign-up");
 });
 
+var contacts = "";
+
 app.get("/contacts", function(req, res) {
     if (req.session.username && req.session.password) {
         url = "http://127.0.0.1:5000/contacts";
@@ -113,7 +115,8 @@ app.get("/contacts", function(req, res) {
             if (!error && response.statusCode == 200) {
                 contact_list = JSON.parse(body);
                 console.log(contact_list);
-                res.render("contacts", { contacts: contact_list.friends });
+                contacts = contact_list.friends;
+                res.redirect("/users");
             } else {
                 res.redirect("/404_page");
             }
@@ -121,6 +124,15 @@ app.get("/contacts", function(req, res) {
     } else {
         res.send("<h1>You need to login to view this page.</h1>");
     }
+});
+
+app.get("/users", function(req, res) {
+    if (req.session.username && req.session.password) {
+        res.render("contacts", { contacts: contacts });
+    } else {
+        res.send("<h1>You need to login to view this page.</h1>");
+    }
+
 });
 
 
