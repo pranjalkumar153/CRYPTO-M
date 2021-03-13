@@ -113,10 +113,10 @@ app.get("/contacts", function(req, res) {
         url = "http://127.0.0.1:5000/contacts";
         request(url, function(error, response, body) {
             if (!error && response.statusCode == 200) {
-                contact_list = JSON.parse(body);
+                contact_list = JSON.parse(body.friends);
                 console.log(contact_list);
                 contacts = contact_list.friends;
-                res.redirect("/users");
+                res.redirect("/users", { contacts: contact_list });
             } else {
                 res.redirect("/404_page");
             }
@@ -128,7 +128,7 @@ app.get("/contacts", function(req, res) {
 
 app.get("/users", function(req, res) {
     if (req.session.username && req.session.password) {
-        res.render("contacts", { contacts: contacts });
+        res.render("contacts", { contacts: contact_list });
     } else {
         res.send("<h1>You need to login to view this page.</h1>");
     }
