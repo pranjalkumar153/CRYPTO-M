@@ -13,14 +13,21 @@
     <h1>Contacts available to chat with: </h1>
     <ul>
         <% for(var i=0;i<contacts.length;i++){ %>
-            <li>
-                <h1>
-                    <%=contacts[i].first_name+" "+contacts[i].last_name%>
-                </h1>
-                <h2>
-                    <%=contacts[i].username %>
-                </h2>
-            </li>
+            <div class="container">
+                <div class="jumbotron">
+                    <li>
+                        <h1>
+                            <%=contacts[i].first_name+" "+contacts[i].last_name%>
+                        </h1>
+                        <h2>
+                            <% var url = "/message/" + contacts[i].username;%>
+                                <a href="<%=url%>">
+                                    <%=contacts[i].username %>
+                                </a>
+                        </h2>
+                    </li>
+                </div>
+            </div>
             <% }; %>
     </ul>
 </body>

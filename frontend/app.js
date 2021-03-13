@@ -136,17 +136,39 @@ app.get("/users", function(req, res) {
 
 });
 
+app.listen(8000, 8000, function(req, res) {
+    console.log("CONNECTED SUCCESSFULLY TO THE SERVER!!");
+});
 
-app.get("/message", function(req, res) {
+// heading towards messaging page
+
+var messages = "";
+app.get("/message/:user", function(req, res) {
     if (req.session.username && req.session.password) {
-        res.render("message");
+        req.session.current_friend = user;
+        url = "http://127.0.0.1:5000/message";
+        url += "/" + req.session.username;
+        url += "/" + user;
+        request(url, function(error, response, body) {
+            if (!error && response.statusCode == 200) {
+                res.redirect("/message");
+                messages = JSON.parse(body);
+            } else {
+                res.redirect("/404_page");
+            }
+        });
     } else {
         res.send("You need to login in order to view this page!!");
     }
 });
 
-app.listen(8000, 8000, function(req, res) {
-    console.log("CONNECTED SUCCESSFULLY TO THE SERVER!!");
+
+app.get("/message", function(req, res) {
+    if (req.session.username && req.session.password && req.session.current_friend) {
+        res.render("message", { messages: messages });
+    } else {
+        res.send("You need to login in order to view this page!!");
+    }
 });
 
 
