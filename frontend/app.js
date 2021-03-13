@@ -14,8 +14,12 @@ app.use(session({ secret: "43d5a9ff7e1f25311e0703f3fea42f6f62673f1cd6171a3834188
 app.use(parser.urlencoded({ extended: true }));
 
 app.set("view engine", "ejs");
-app.get(["/", "/homepage", "/sign-in"], function(req, res) {
-    res.render("sign-in");
+app.get(["/", "/homepage", "/sign-in", "/login"], function(req, res) {
+    if (req.session.username && req.session.password) {
+        res.redirect("/message");
+    } else {
+        res.render("sign-in");
+    }
 });
 
 app.post("/login", function(req, res) {
