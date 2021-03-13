@@ -153,6 +153,7 @@ app.get("/message/:user", function(req, res) {
             if (!error && response.statusCode == 200) {
                 res.redirect("/message");
                 messages = JSON.parse(body);
+                console.log(messages);
             } else {
                 res.redirect("/404_page");
             }

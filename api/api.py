@@ -105,6 +105,27 @@ def register(first_name,last_name,username,email,password):
 # users = db.child("name").child("name").get()
 
 # print(users)
+
+# adding route for chat system
+# for retrieving the messages
+@app.route("/message/<sender>/<receiver>")
+def get_messages(sender,receiver):
+    messages = db.child("messages").child(sender).child(receiver).get()
+    messages = {"messages" : messages}
+    return messages
+    
+# route for sending messages
+@app.route("/message/send/<sender>/<receiver>")
+def send_messages(sender,receiver,message):
+    db.child("messages").child(sender).child(receiver).push({
+        "message" : message,
+        "response_type" : "sent",
+    })
+    db.child("messages").child(sender).child(receiver).push({
+        "message" : message,
+        "response_type" : "received",
+    })
+    
     
     
 app.run(debug=True)
