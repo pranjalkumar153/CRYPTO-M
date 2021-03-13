@@ -57,7 +57,24 @@ def login(username,password):
             data_dictionary["correct_credentials"] = True
             return data_dictionary
     return data_dictionary
-  
+
+# route for fetching the contacts in database
+@app.route("/contacts")
+def fetch_contacts():
+    users = db.child("users").get()
+    contacts_list = []
+    for x in users.each():
+        data_dictionary = {
+            "username" : x.val()["username"],
+            "last_name" : x.val()["first_name"],
+            "first_name" : x.val()["last_name"] 
+        }
+        contacts_list.append(data_dictionary)
+    contacts = {
+        "friends":contacts_list
+    }
+    return contacts
+
 # registration route functionality
 @app.route("/register/<first_name>/<last_name>/<username>/<email>/<password>")
 def register(first_name,last_name,username,email,password):

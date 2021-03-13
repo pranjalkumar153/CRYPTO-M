@@ -24,7 +24,7 @@ app.get(["/", "/homepage", "/sign-in", "/login"], function(req, res) {
 
 app.post("/login", function(req, res) {
     if (req.session.username && req.session.password) {
-        res.redirect("/message");
+        res.redirect("/contacts");
     }
     username = req.body.username;
     password = md5(req.body.password);
@@ -39,7 +39,7 @@ app.post("/login", function(req, res) {
             if (credentials.correct_credentials == true) {
                 req.session.username = credentials.username;
                 req.session.password = credentials.password;
-                res.redirect("/message");
+                res.redirect("/contacts");
             } else {
                 res.redirect("/");
             }
@@ -112,7 +112,8 @@ app.get("/contacts", function(req, res) {
         request(url, function(error, response, body) {
             if (!error && response.statusCode == 200) {
                 contact_list = JSON.parse(body);
-                res.render("contacts", { contacts: contact_list });
+                console.log(contact_list);
+                res.render("contacts", { contacts: contact_list.friends });
             } else {
                 res.redirect("/404_page");
             }
