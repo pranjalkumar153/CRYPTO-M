@@ -113,6 +113,7 @@ def get_messages(sender,receiver):
     messages = db.child("messages").child(sender).child(receiver).get()
     print(messages)
     dictionary = dict()
+    print(type(messages))
     for x in messages.each():
         dictionary[x.key()] = x.val()
     messages = {"messages" : dictionary}

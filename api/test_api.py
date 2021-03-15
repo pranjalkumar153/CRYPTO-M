@@ -31,3 +31,24 @@ db = firebase.database()
 # print(users)
 
 db.child("id").push({"id":"1"})
+
+# def send_messages(sender,receiver,message):
+#     db.child("messages").child(sender).child(receiver).push({
+#         "message" : message,
+#         "response_type" : "sent",
+#     })
+#     db.child("messages").child(sender).child(receiver).push({
+#         "message" : message,
+#         "response_type" : "received",
+#     })
+
+
+db.child("messages").child("pk153").child("hustle").push({
+    
+    "message": "Hi",
+    "response_type" : "sent"
+})
+db.child("messages").child("hustle").child("pk153").push({
+    "message": "Hi",
+    "response_type" : "received"
+})
