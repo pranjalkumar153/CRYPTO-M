@@ -111,6 +111,7 @@ def register(first_name,last_name,username,email,password):
 @app.route("/message/<sender>/<receiver>")
 def get_messages(sender,receiver):
     messages = db.child("messages").child(sender).child(receiver).get()
+    print(messages)
     messages = {"messages" : messages}
     return messages
     

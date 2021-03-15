@@ -145,10 +145,10 @@ app.listen(8000, 8000, function(req, res) {
 var messages = "";
 app.get("/message/:user", function(req, res) {
     if (req.session.username && req.session.password) {
-        req.session.current_friend = user;
+        req.session.current_friend = req.params.user;
         url = "http://127.0.0.1:5000/message";
         url += "/" + req.session.username;
-        url += "/" + user;
+        url += "/" + req.params.user;
         request(url, function(error, response, body) {
             if (!error && response.statusCode == 200) {
                 res.redirect("/message");
