@@ -116,10 +116,12 @@ def get_messages(sender,receiver):
     messages_array = []
     for x in messages.each():
         dictionary = dict()
-        # dictionary[str("message"])] = x.val()
-        # dictionary[str(x.key()["response_type"])] = x.val()
-        # messages_array.append(dictionary)
-    messages = {"messages" : messages_array}
+        dictionary[str("message")] = x.val()["message"]
+        dictionary[str("response_type")] = x.val()["response_type"]
+        messages_array.append(dictionary)
+    messages = {"messages" : messages_array,
+                "sender" : sender,
+                "receiver" : receiver}
     print(messages)
     return messages
     

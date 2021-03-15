@@ -11,7 +11,37 @@
     <div class="container" style="height:80%; margin: blue 3px solid;">
         <div class="jumbotron">
             <div class="previous_messages">
-                for
+                <ul>
+                    <% for(var i=0;i<messages.messages.length;i++){ %>
+                        <%  if(messages.messages[i].response_type == "sent"){ %>
+                            <div class="container">
+                                <div class="jumbotron">
+                                    <li>
+                                        <h5>
+                                            <%=messages.sender%>
+                                        </h5>
+                                        <h6>
+                                            <%=messages.messages[i].message%>
+                                        </h6>
+                                    </li>
+                                </div>
+                            </div>
+                            <%}else{%>
+                                <div class="container">
+                                    <div class="jumbotron">
+                                        <li>
+                                            <h5>
+                                                <%=messages.receiver%>
+                                            </h5>
+                                            <h6>
+                                                <%=messages.messages[i].message%>
+                                            </h6>
+                                        </li>
+                                    </div>
+                                </div>
+                                <%}%>
+                                    <% }; %>
+                </ul>
             </div>
         </div>
     </div>
