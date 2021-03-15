@@ -112,11 +112,14 @@ def register(first_name,last_name,username,email,password):
 def get_messages(sender,receiver):
     messages = db.child("messages").child(sender).child(receiver).get()
     print(messages)
-    dictionary = dict()
     print(type(messages))
+    messages_array = []
     for x in messages.each():
-        dictionary[x.key()] = x.val()
-    messages = {"messages" : dictionary}
+        dictionary = dict()
+        # dictionary[str("message"])] = x.val()
+        # dictionary[str(x.key()["response_type"])] = x.val()
+        # messages_array.append(dictionary)
+    messages = {"messages" : messages_array}
     print(messages)
     return messages
     

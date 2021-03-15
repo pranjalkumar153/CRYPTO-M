@@ -43,12 +43,12 @@ db.child("id").push({"id":"1"})
 #     })
 
 
-db.child("messages").child("pk153").child("hustle").push({
+db.child("messages").child("pk153").child("hijack").push({
     
     "message": "Hi",
     "response_type" : "sent"
 })
-db.child("messages").child("hustle").child("pk153").push({
+db.child("messages").child("hijack").child("pk153").push({
     "message": "Hi",
     "response_type" : "received"
 })
