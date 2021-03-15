@@ -112,7 +112,11 @@ def register(first_name,last_name,username,email,password):
 def get_messages(sender,receiver):
     messages = db.child("messages").child(sender).child(receiver).get()
     print(messages)
-    messages = {"messages" : messages}
+    dictionary = dict()
+    for x in messages.each():
+        dictionary[x.key()] = x.val()
+    messages = {"messages" : dictionary}
+    print(messages)
     return messages
     
 # route for sending messages
