@@ -1,8 +1,6 @@
 from flask import Flask
 from flask import jsonify
 
-
-
 from api_support import generate_keys
 
 import pyrebase 
