@@ -21,20 +21,19 @@
                                 <h6 style="color:blue; text-align:right;">
                                     <%=messages.messages[i].message%>
                                 </h6>
+                                <hr>
                             </li>
                             <%}else{%>
-                                <div class="container">
-                                    <div class="jumbotron">
-                                        <li>
-                                            <h5 style="color:green; text-align:left;">
-                                                <%=messages.receiver%>
-                                            </h5>
-                                            <h6 style="color:green; text-align:left;">
-                                                <%=messages.messages[i].message%>
-                                            </h6>
-                                        </li>
-                                    </div>
-                                </div>
+                                <li>
+                                    <h5 style="color:green; text-align:left;">
+                                        <%=messages.receiver%>
+                                    </h5>
+                                    <h6 style="color:green; text-align:left;">
+                                        <%=messages.messages[i].message%>
+                                    </h6>
+                                    <hr>
+                                </li>
+
                                 <%}%>
                                     <% }; %>
                 </ul>
@@ -45,7 +44,7 @@
         <div class="jumbotron">
             <div>
                 <form action="/send_message" method="POST">
-                    <input type="text" name="message" id="message">
+                    <input type="text" name="message" id="message" style="width:50%;">
                     <button type="submit" class="btn btn-success">SEND</button>
                 </form>
             </div>
