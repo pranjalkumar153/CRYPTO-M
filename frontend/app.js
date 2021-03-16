@@ -173,4 +173,27 @@ app.get("/message", function(req, res) {
 });
 
 
-// sorting out the signup system
+// adding routes for sending message
+app.post("/send_message", function(req, res) {
+    if (req.session.username && req.session.password && req.session.current_friend) {
+        url = "http://127.0.0.1:5000/message/send/";
+        url += "/" + req.session.username;
+        url += "/" + req.session.current_friend;
+        url += "/" + req.body.message;
+        request(url, function(error, response, body) {
+            if (!error && response.statusCode == 200) {
+                message_status = JSON.parse(body);
+                console.log(message_status);
+                if (message_status.message_status == true) {
+                    redirect_url = "/message";
+                    redirect_url += "/" + req.session.current_friend;
+                    res.redirect(redirect_url);
+                }
+            } else {
+                res.redirect("/404_page");
+            }
+        });
+    } else {
+        res.send("You need to login in order to view this page!!");
+    }
+});

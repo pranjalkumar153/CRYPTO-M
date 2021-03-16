@@ -126,7 +126,7 @@ def get_messages(sender,receiver):
     return messages
     
 # route for sending messages
-@app.route("/message/send/<sender>/<receiver>")
+@app.route("/message/send/<sender>/<receiver>/<message>")
 def send_messages(sender,receiver,message):
     db.child("messages").child(sender).child(receiver).push({
         "message" : message,
@@ -136,6 +136,7 @@ def send_messages(sender,receiver,message):
         "message" : message,
         "response_type" : "received",
     })
+    return {"message_status":True}
     
     
     
