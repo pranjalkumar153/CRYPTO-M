@@ -176,9 +176,10 @@ app.get("/message", function(req, res) {
 // adding routes for sending message
 app.post("/send_message", function(req, res) {
     if (req.session.username && req.session.password && req.session.current_friend) {
-        url = "http://127.0.0.1:5000/message/send/";
+        url = "http://127.0.0.1:5000/message/send";
         url += "/" + req.session.username;
         url += "/" + req.session.current_friend;
+        console.log(req.body.message);
         url += "/" + req.body.message;
         request(url, function(error, response, body) {
             if (!error && response.statusCode == 200) {
