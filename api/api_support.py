@@ -30,4 +30,21 @@ def generate_keys(username_sender,username_receiver):
     KEY_TWO += 1 
     dictionary = {"p":KEY_ONE,"q":KEY_TWO}
     return dictionary
-    
+
+
+def modInverse(a, m):
+     
+    for x in range(1, m):
+        if (((a%m) * (x%m)) % m == 1):
+            return x
+    return -1
+
+
+def bin_pow(a,b,M):
+    if(b==0):
+        return 1
+    if(b==1):
+        return a%M
+    if(b%2==0):
+        return ((bin_pow(a,b//2)%M)*(bin_pow(a,b//2)%M))%M
+    return ((((bin_pow(a,b//2)%M)*(bin_pow(a,b//2)%M))%M)*(a%M))%M

@@ -130,6 +130,7 @@ def send_messages(sender,receiver,message):
         "message" : message,
         "response_type" : "sent",
     })
+    
     db.child("messages").child(receiver).child(sender).push({
         "message" : message,
         "response_type" : "received",
