@@ -133,12 +133,15 @@ def send_messages(sender,receiver,message):
         ascii_val = ord(x)
         c = bin_pow(ascii_val,keys["e"],N)
         message_array_encrypted.append(c)
+    message_encrypted = []
+    for x in message_array_encrypted:
+        message_encrypted.append(str(x))
     db.child("messages").child(sender).child(receiver).push({
-        "message" : message_array_encrypted,
+        "message" : message_encrypted,
         "response_type" : "sent",
     })
     db.child("messages").child(receiver).child(sender).push({
-        "message" : message_array_encrypted,
+        "message" : message_encrypted,
         "response_type" : "received",
     })
     return {"message_status":True}

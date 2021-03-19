@@ -51,5 +51,5 @@ def bin_pow(a,b,M):
     if(b==1):
         return a%M
     if(b%2==0):
-        return ((bin_pow(a,b//2)%M)*(bin_pow(a,b//2)%M))%M
-    return ((((bin_pow(a,b//2)%M)*(bin_pow(a,b//2)%M))%M)*(a%M))%M
+        return ((bin_pow(a,b//2,M)%M)*(bin_pow(a,b//2,M)%M))%M
+    return ((((bin_pow(a,b//2,M)%M)*(bin_pow(a,b//2,M)%M))%M)*(a%M))%M
