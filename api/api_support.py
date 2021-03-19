@@ -11,6 +11,14 @@ for i in range(100000):
         for j in range(2*i,100000,i):
             PRIMES[j] = False
 
+def modInverse(a, m):
+     
+    for x in range(1, m):
+        if (((a%m) * (x%m)) % m == 1):
+            return x
+    return -1
+
+
 def generate_keys(username_sender,username_receiver):
     KEY_ONE_COUNT = 0
     for x in username_sender:
@@ -32,17 +40,11 @@ def generate_keys(username_sender,username_receiver):
     for i in range(1,100000):
         if(PRIMES[i]==True):
             index = i
-    
     dictionary = {"p":KEY_ONE,"q":KEY_TWO,"e":index}
     return dictionary
 
 
-def modInverse(a, m):
-     
-    for x in range(1, m):
-        if (((a%m) * (x%m)) % m == 1):
-            return x
-    return -1
+
 
 
 def bin_pow(a,b,M):

@@ -109,6 +109,7 @@ def register(first_name,last_name,username,email,password):
 @app.route("/message/<sender>/<receiver>")
 def get_messages(sender,receiver):
     messages = db.child("messages").child(sender).child(receiver).get()
+    print("From messages")
     print(messages)
     print(type(messages))
     messages_array = []
@@ -116,7 +117,6 @@ def get_messages(sender,receiver):
         dictionary = dict()
         dictionary[str("message")] = x.val()["message"]
         dictionary[str("response_type")] = x.val()["response_type"]
-        messages_array.append(dictionary)
     messages = {"messages" : messages_array,
                 "sender" : sender,
                 "receiver" : receiver}
