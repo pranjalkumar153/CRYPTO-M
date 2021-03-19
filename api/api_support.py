@@ -28,7 +28,12 @@ def generate_keys(username_sender,username_receiver):
         if(PRIMES[i]==True):
             KEY_TWO *= i
     KEY_TWO += 1 
-    dictionary = {"p":KEY_ONE,"q":KEY_TWO}
+    index =-1
+    for i in range(1,100000):
+        if(PRIMES[i]==True):
+            index = i
+    
+    dictionary = {"p":KEY_ONE,"q":KEY_TWO,"e":index}
     return dictionary
 
 

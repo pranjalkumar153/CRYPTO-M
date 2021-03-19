@@ -1,7 +1,7 @@
 from flask import Flask
 from flask import jsonify
 
-from api_support import generate_keys
+from api_support import generate_keys, bin_pow
 
 import pyrebase 
 
@@ -126,13 +126,19 @@ def get_messages(sender,receiver):
 # route for sending messages
 @app.route("/message/send/<sender>/<receiver>/<message>")
 def send_messages(sender,receiver,message):
+    message_array_encrypted = []
+    keys = generate_keys(sender,receiver)
+    N = keys["p"]*keys["q"]
+    for x in message:
+        ascii_val = ord(x)
+        c = bin_pow(ascii_val,keys["e"],N)
+        message_array_encrypted.append(c)
     db.child("messages").child(sender).child(receiver).push({
-        "message" : message,
+        "message" : message_array_encrypted,
         "response_type" : "sent",
     })
-    
     db.child("messages").child(receiver).child(sender).push({
-        "message" : message,
+        "message" : message_array_encrypted,
         "response_type" : "received",
     })
     return {"message_status":True}
