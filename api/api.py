@@ -111,30 +111,20 @@ def register(first_name,last_name,username,email,password):
 @app.route("/message/<sender>/<receiver>")
 def get_messages(sender,receiver):
     messages = db.child("messages").child(sender).child(receiver).get()
-    print("From messages")
-    print(messages)
-    print(type(messages))
-    keys = generate_keys(sender,receiver)
-    N = (keys["p"]-1)*(keys["q"]-1)
-    d = modInverse(keys["e"],N)
-    messages_array = []
-    if(hasattr(messages,"__iter__")==True):
-        for x in messages.each():
-            dictionary = dict()
-            message_array_encrypted = x.val()["message"]
-            print("message_array_encrypted={}",format(message_array_encrypted))
-            message_text = ""
-            for e in message_array_encrypted:
-                ascii_val = bin_pow(int(e),d,N)
-                print(ascii_val)
-                message_text += chr(ascii_val)
-            dictionary[str("messages")] = message_text
-            dictionary[str("response_type")] = x.val()["response_type"]
-            messages_array.append(dictionary)
-    messages = {"messages" : messages_array,
-                "sender" : sender,
-                "receiver" : receiver}
-    print(messages)
+    messages_array_retrieve = []
+    for x in messages.each():
+        dictionary = dict()
+        dictionary = {
+            "message_encrypted_array" : x.val()["message"],
+            "response_type": x.val()["response_type"]
+        }
+        messages_array_retrieve.append(dictionary)
+    message = {
+        "messages" : messages_array_retrieve,
+        "sender":sender,
+        "receiver":receiver
+    }
+    print(messages_array_retrieve)
     return messages
     
 # route for sending messages
