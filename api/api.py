@@ -1,7 +1,7 @@
 from flask import Flask
 from flask import jsonify
 
-from api_support import generate_keys, bin_pow
+from api_support import generate_keys, bin_pow, modInverse
 
 import pyrebase 
 
@@ -114,11 +114,21 @@ def get_messages(sender,receiver):
     print("From messages")
     print(messages)
     print(type(messages))
+    keys = generate_keys(sender,receiver)
+    N = (keys["p"]-1)*(keys["q"]-1)
+    d = modInverse(keys["e"],N)
     messages_array = []
     if(hasattr(messages,"__iter__")==True):
         for x in messages.each():
             dictionary = dict()
-            dictionary[str("message")] = x.val()["message"]
+            message_array_encrypted = x.val()["message"]
+            print("message_array_encrypted={}",format(message_array_encrypted))
+            message_text = ""
+            for e in message_array_encrypted:
+                ascii_val = bin_pow(int(e),d,N)
+                print(ascii_val)
+                message_text += chr(ascii_val)
+            dictionary[str("messages")] = message_text
             dictionary[str("response_type")] = x.val()["response_type"]
             messages_array.append(dictionary)
     messages = {"messages" : messages_array,
@@ -132,7 +142,7 @@ def get_messages(sender,receiver):
 def send_messages(sender,receiver,message):
     message_array_encrypted = []
     keys = generate_keys(sender,receiver)
-    N = keys["p"]*keys["q"]
+    N = (keys["p"]-1)*(keys["q"]-1)
     for x in message:
         ascii_val = ord(x)
         c = bin_pow(ascii_val,keys["e"],N)
