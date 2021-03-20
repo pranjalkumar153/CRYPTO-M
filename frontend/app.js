@@ -198,3 +198,10 @@ app.post("/send_message", function(req, res) {
         res.send("You need to login in order to view this page!!");
     }
 });
+
+// route for logging out
+app.post("/logout", function(req, res) {
+    req.session.username = null;
+    req.session.password = null;
+    res.redirect("/");
+});

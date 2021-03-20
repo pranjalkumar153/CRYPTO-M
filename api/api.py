@@ -85,10 +85,12 @@ def register(first_name,last_name,username,email,password):
         "success" : True
     }
     users = db.child("users").get()
-    for x in users.each():
-        if(x.val()["email"]==email or x.val()["username"]==username):
-            dictionary_data["success"] = False
-            break
+    # hasattr(b, '__iter__')
+    if(hasattr(users,'__iter__')==True):
+        for x in users.each():
+            if(x.val()["email"]==email or x.val()["username"]==username):
+                dictionary_data["success"] = False
+                break
     if(dictionary_data["success"]==False):
         return dictionary_data
     dictionary_data["success"]
