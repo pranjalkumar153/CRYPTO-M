@@ -112,18 +112,35 @@ def register(first_name,last_name,username,email,password):
 def get_messages(sender,receiver):
     messages = db.child("messages").child(sender).child(receiver).get()
     messages_array_retrieve = []
-    for x in messages.each():
+    keys = generate_keys(sender,receiver)
+    N = (keys["p"]-1)*(keys["q"]-1)
+    d = modInverse(keys["e"],N)
+    if(hasattr(messages,"__iter__")):
+        for x in messages.each():
+            dictionary = dict()
+            dictionary = {
+                "message_encrypted_array" : x.val()["message"],
+                "response_type": x.val()["response_type"]
+            }
+            messages_array_retrieve.append(dictionary)
+    message_text_array = []
+    for i in range(len(messages_array_retrieve)):
+        message_text = ""
+        message_array = messages_array_retrieve[i]["message_encrypted_array"]
+        for i in range(len(message_array)):
+            ascii_val = bin_pow(int(message_array[i]),d,N)
+            message_text += chr(ascii_val)
         dictionary = dict()
-        dictionary = {
-            "message_encrypted_array" : x.val()["message"],
-            "response_type": x.val()["response_type"]
-        }
-        messages_array_retrieve.append(dictionary)
+        dictionary["message_text"] = message_text
+        dictionary["response_type"] = messages_array_retrieve[i]["response_type"]
+        message_text_array.append(dictionary)
+    print(message_text_array)
     message = {
-        "messages" : messages_array_retrieve,
+        "messages" : message_text_array,
         "sender":sender,
         "receiver":receiver
     }
+    print(" message = {}",format(message))
     print(messages_array_retrieve)
     return messages
     
