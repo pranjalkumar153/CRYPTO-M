@@ -115,20 +115,34 @@ def get_messages(sender,receiver):
     keys = generate_keys(sender,receiver)
     N = (keys["p"]-1)*(keys["q"]-1)
     d = modInverse(keys["e"],N)
-    
-    for x in messages.each():
+    if(hasattr(messages,"__iter__")):
+        for x in messages.each():
+            dictionary = dict()
+            dictionary = {
+                "message_encrypted_array" : x.val()["message"],
+                "response_type": x.val()["response_type"]
+            }
+            messages_array_retrieve.append(dictionary)
+    message_text_array = []
+    for i in range(len(messages_array_retrieve)):
+        x = messages_array_retrieve[i]
+        message_encrypted_text = x["message_encrypted_array"]
+        message_text = ""
+        for j in range(len(message_encrypted_text)):
+            ascii_val = bin_pow(int(message_encrypted_text[j]),d,N)
+            message_text += str(chr(ascii_val))
         dictionary = dict()
-        dictionary = {
-            "message_encrypted_array" : x.val()["message"],
-            "response_type": x.val()["response_type"]
-        }
-        messages_array_retrieve.append(dictionary)
+        dictionary["message_text"] = message_text
+        dictionary["response_type"] = x["response_type"]
+        message_text_array.append(dictionary)
     print(messages_array_retrieve)
+    print(message_text_array)
     message = {
-        "messages" : messages_array_retrieve,
+        "messages" : message_text_array,
         "sender":sender,
         "receiver":receiver
     }
+    print(message)
     print(" message = {}",format(message))
     print(messages_array_retrieve)
     return messages
@@ -145,7 +159,7 @@ def send_messages(sender,receiver,message):
         message_array_encrypted.append(c)
     message_encrypted = []
     for x in message_array_encrypted:
-        message_encrypted.append(str(x))
+        message_encrypted.append(x)
     db.child("messages").child(sender).child(receiver).push({
         "message" : message_encrypted,
         "response_type" : "sent",
