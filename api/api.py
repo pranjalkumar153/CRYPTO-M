@@ -115,28 +115,17 @@ def get_messages(sender,receiver):
     keys = generate_keys(sender,receiver)
     N = (keys["p"]-1)*(keys["q"]-1)
     d = modInverse(keys["e"],N)
-    if(hasattr(messages,"__iter__")):
-        for x in messages.each():
-            dictionary = dict()
-            dictionary = {
-                "message_encrypted_array" : x.val()["message"],
-                "response_type": x.val()["response_type"]
-            }
-            messages_array_retrieve.append(dictionary)
-    message_text_array = []
-    for i in range(len(messages_array_retrieve)):
-        message_text = ""
-        message_array = messages_array_retrieve[i]["message_encrypted_array"]
-        for i in range(len(message_array)):
-            ascii_val = bin_pow(int(message_array[i]),d,N)
-            message_text += chr(ascii_val)
+    
+    for x in messages.each():
         dictionary = dict()
-        dictionary["message_text"] = message_text
-        dictionary["response_type"] = messages_array_retrieve[i]["response_type"]
-        message_text_array.append(dictionary)
-    print(message_text_array)
+        dictionary = {
+            "message_encrypted_array" : x.val()["message"],
+            "response_type": x.val()["response_type"]
+        }
+        messages_array_retrieve.append(dictionary)
+    print(messages_array_retrieve)
     message = {
-        "messages" : message_text_array,
+        "messages" : messages_array_retrieve,
         "sender":sender,
         "receiver":receiver
     }
